@@ -11,6 +11,80 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://velprove.github.io/sla-terms/" />
   <meta name="robots" content="index, follow" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Cloud Provider SLA Terms",
+    "alternateName": "Cloud SLA Credit Schedules Dataset",
+    "description": "Open dataset of standard SLA credit schedules for major cloud providers. Covers AWS, Google Cloud, Azure, Cloudflare, and Vercel. Each entry includes default contracted uptime, tiered credit schedule, credit cap, claim deadline, source URL, and reality-check notes on the claim process. Machine-readable JSON.",
+    "url": "https://velprove.github.io/sla-terms/",
+    "version": "1.0.0",
+    "dateModified": "2026-05-21",
+    "datePublished": "2026-05-21",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "keywords": [
+      "cloud SLA",
+      "service level agreement",
+      "SLA credits",
+      "AWS SLA",
+      "GCP SLA",
+      "Azure SLA",
+      "Cloudflare SLA",
+      "Vercel SLA",
+      "uptime guarantee",
+      "credit schedule"
+    ],
+    "creator": {
+      "@type": "Organization",
+      "name": "Velprove",
+      "url": "https://velprove.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Velprove",
+      "url": "https://velprove.com",
+      "logo": "https://velprove.com/icon.png"
+    },
+    "distribution": [
+      {
+        "@type": "DataDownload",
+        "name": "Providers JSON",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://velprove.github.io/sla-terms/data/providers.json"
+      }
+    ],
+    "isBasedOn": [
+      "https://aws.amazon.com/legal/service-level-agreements/",
+      "https://cloud.google.com/terms/sla",
+      "https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services",
+      "https://www.cloudflare.com/business-sla/",
+      "https://vercel.com/legal/sla"
+    ],
+    "variableMeasured": [
+      {
+        "@type": "PropertyValue",
+        "name": "defaultSla",
+        "description": "Contracted uptime percentage in the standard SLA",
+        "unitText": "%"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "creditCapPct",
+        "description": "Maximum percentage of monthly fee refundable as SLA credit",
+        "unitText": "%"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "claimDeadlineDays",
+        "description": "Days within which an SLA credit claim must be filed",
+        "unitText": "days"
+      }
+    ]
+  }
+  </script>
   <style>
     :root {
       --bg: #0a0d12;

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "_meta": {
+    "title": "Cloud Provider SLA Terms Dataset",
+    "version": "1.0.0",
+    "lastVerified": "2026-05-21",
+    "license": "CC-BY-4.0",
+    "source": "https://github.com/velprove/sla-terms",
+    "interactive": "https://velprove.com/sla-credit-calculator",
+    "notes": "Schedules sourced from each provider's publicly documented standard SLA terms. NOT LEGAL ADVICE. Verify against the actual contract text for any commercial claim. Different services within the same provider may have slightly different tiers (e.g., AWS S3 differs from EC2). Enterprise contracts often have custom terms."
+  },
+  "providers": [
+    {
+      "id": "aws",
+      "name": "Amazon Web Services",
+      "scope": "EC2, S3, RDS (default schedule)",
+      "defaultSla": 99.9,
+      "tiers": [
+        { "uptimeMin": 99.9, "creditPct": 0, "label": "SLA met" },
+        { "uptimeMin": 99.0, "creditPct": 10 },
+        { "uptimeMin": 95.0, "creditPct": 30 },
+        { "uptimeMin": 0, "creditPct": 100 }
+      ],
+      "creditCapPct": 100,
+      "claimDeadlineDays": 30,
+      "noSla": false,
+      "sourceUrl": "https://aws.amazon.com/legal/service-level-agreements/",
+      "notes": "AWS requires you to file a claim within 30 days of the SLA period. Credits are applied to future bills for the affected service, not a cash refund. Different AWS services use slightly different schedules; check the specific SLA terms."
+    },
+    {
+      "id": "gcp",
+      "name": "Google Cloud Platform",
+      "scope": "Compute Engine, GCS (default schedule)",
+      "defaultSla": 99.99,
+      "tiers": [
+        { "uptimeMin": 99.99, "creditPct": 0, "label": "SLA met" },
+        { "uptimeMin": 99.0, "creditPct": 10 },
+        { "uptimeMin": 95.0, "creditPct": 25 },
+        { "uptimeMin": 0, "creditPct": 50 }
+      ],
+      "creditCapPct": 50,
+      "claimDeadlineDays": 30,
+      "noSla": false,
+      "sourceUrl": "https://cloud.google.com/terms/sla",
+      "notes": "Google Cloud applies some credits automatically; others require a support case within 30 days. Credit is calculated against monthly bill for the affected service only."
+    },
+    {
+      "id": "azure",
+      "name": "Microsoft Azure",
+      "scope": "Most services (default schedule)",
+      "defaultSla": 99.9,
+      "tiers": [
+        { "uptimeMin": 99.9, "creditPct": 0, "label": "SLA met" },
+        { "uptimeMin": 99.0, "creditPct": 10 },
+        { "uptimeMin": 0, "creditPct": 25 }
+      ],
+      "creditCapPct": 25,
+      "claimDeadlineDays": 60,
+      "noSla": false,
+      "sourceUrl": "https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services",
+      "notes": "Azure caps most service credits at 25% of monthly fee for the affected service. Claims must be filed via a support ticket. Credits are not applied automatically."
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare",
+      "scope": "Workers / Pages (Pro / Business)",
+      "defaultSla": 99.9,
+      "tiers": [
+        { "uptimeMin": 99.9, "creditPct": 0, "label": "SLA met" },
+        { "uptimeMin": 0, "creditPct": 25 }
+      ],
+      "creditCapPct": 25,
+      "claimDeadlineDays": 30,
+      "noSla": false,
+      "sourceUrl": "https://www.cloudflare.com/business-sla/",
+      "notes": "Cloudflare Pro and Business plans have a single 25% credit tier. Any uptime below 99.9% triggers it. The Free plan has no SLA at all. Claims must be filed within 30 days."
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel (Hobby / Pro)",
+      "scope": "Hobby and Pro plans only",
+      "defaultSla": null,
+      "tiers": [],
+      "creditCapPct": 0,
+      "claimDeadlineDays": null,
+      "noSla": true,
+      "sourceUrl": "https://vercel.com/legal/sla",
+      "notes": "Vercel Hobby and Pro plans have NO SLA at all. There is no contractual uptime guarantee, so regardless of how much downtime you experience, you are owed $0 in credits. Vercel Enterprise has SLAs with custom terms. Check your contract."
+    }
+  ]
+}

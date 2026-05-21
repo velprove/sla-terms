@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cloud Provider SLA Terms: Public Dataset of Credit Schedules</title>
+  <meta name="description" content="Open dataset of cloud-provider SLA credit schedules. AWS, Google Cloud, Azure, Cloudflare, and Vercel terms side by side. Free, machine-readable JSON. Maintained by Velprove." />
+  <link rel="canonical" href="https://velprove.github.io/sla-terms/" />
+  <meta property="og:title" content="Cloud Provider SLA Terms Dataset" />
+  <meta property="og:description" content="Open dataset of cloud-provider SLA credit schedules. AWS, GCP, Azure, Cloudflare, Vercel. Maintained by Velprove." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://velprove.github.io/sla-terms/" />
+  <meta name="robots" content="index, follow" />
+  <style>
+    :root {
+      --bg: #0a0d12;
+      --bg-elevated: #11161d;
+      --bg-card: #161c25;
+      --border: #232a35;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --accent: #10b981;
+      --accent-dim: #059669;
+      --warn: #fbbf24;
+      --danger: #f87171;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: #34d399; text-decoration: underline; }
+    code { font-family: var(--mono); font-size: 0.9em; background: var(--bg-elevated); padding: 1px 6px; border-radius: 4px; }
+    header {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 24px 40px;
+    }
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 0 24px;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-top: 24px;
+    }
+    .meta-row span { display: inline-flex; align-items: center; gap: 6px; }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    section { margin-bottom: 56px; }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 0 20px;
+      letter-spacing: -0.01em;
+    }
+    .providers-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    }
+    .provider {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .provider header {
+      max-width: none;
+      margin: 0;
+      padding: 0 0 16px;
+    }
+    .provider-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 4px;
+    }
+    .provider-scope {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin: 0 0 16px;
+    }
+    .tier-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      margin: 16px 0;
+    }
+    .tier-table th, .tier-table td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .tier-table th {
+      color: var(--text-dim);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tier-table .met { color: var(--accent); }
+    .tier-table .credit { color: var(--warn); }
+    .badge-no-sla {
+      display: inline-block;
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 12px 0;
+    }
+    .cap-deadline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 12px 0 16px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cap-deadline strong { color: var(--text); font-weight: 600; }
+    .reality-check {
+      background: rgba(251, 191, 36, 0.08);
+      border-left: 3px solid var(--warn);
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 12px 0;
+    }
+    .source-link {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin: 12px 0 0;
+    }
+    .source-link a { color: var(--accent-dim); }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: var(--accent-dim);
+      color: white;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: var(--accent); text-decoration: none; color: white; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-secondary:hover { background: var(--bg-card); color: var(--text); }
+    .related-tools {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .related-tools h2 { margin-top: 0; }
+    .related-tools ul { list-style: none; padding: 0; margin: 0; }
+    .related-tools li { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .related-tools li:last-child { border-bottom: 0; }
+    .related-tools li strong { display: block; margin-bottom: 2px; }
+    .related-tools li span { color: var(--text-muted); font-size: 0.9rem; }
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: space-between;
+    }
+    footer a { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cloud Provider SLA Terms</h1>
+    <p class="lead">
+      Open dataset of standard SLA credit schedules for the major cloud providers. AWS, Google Cloud, Azure, Cloudflare, and Vercel side by side. Free to use. Machine-readable JSON, maintained as terms change.
+    </p>
+    <div class="actions">
+      <a class="btn" href="https://velprove.com/sla-credit-calculator">Open the SLA Credit Calculator</a>
+      <a class="btn btn-secondary" href="data/providers.json">View raw JSON</a>
+      <a class="btn btn-secondary" href="https://github.com/velprove/sla-terms">Source on GitHub</a>
+    </div>
+    <div class="meta-row">
+      <span>Last verified <strong id="last-verified">2026-05-21</strong></span>
+      <span>Version <strong id="version">1.0.0</strong></span>
+      <span>License <strong>CC-BY-4.0</strong></span>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Provider schedules</h2>
+      <div class="providers-grid" id="providers"></div>
+    </section>
+
+    <section class="related-tools">
+      <h2>Run the math interactively</h2>
+      <ul>
+        <li>
+          <strong><a href="https://velprove.com/sla-credit-calculator">SLA Credit Calculator</a></strong>
+          <span>Plug in your provider, actual uptime, and contract value. See the credit owed for any of the providers in this dataset.</span>
+        </li>
+        <li>
+          <strong><a href="https://velprove.com/uptime-sla-calculator">Uptime SLA Calculator</a></strong>
+          <span>Convert any SLA percentage into the real downtime budget per day, week, month, and year.</span>
+        </li>
+        <li>
+          <strong><a href="https://velprove.com/downtime-cost-calculator">Downtime Cost Calculator</a></strong>
+          <span>Multi-dimensional breakdown of what an outage actually costs your business.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>About this dataset</h2>
+      <p>
+        Schedules are extracted from each provider's publicly documented standard SLA terms. Different services within the same provider may have slightly different tiers (for example, AWS S3 differs from EC2). Enterprise contracts often have custom terms. <strong>This is not legal advice.</strong> For any commercial claim, verify against the actual contract text you signed.
+      </p>
+      <p>
+        Each entry links to the provider's official SLA page so you can confirm current terms. If terms change, file an issue or PR on <a href="https://github.com/velprove/sla-terms">the GitHub repo</a>.
+      </p>
+      <p>
+        Maintained by <a href="https://velprove.com">Velprove</a>, an uptime monitoring service that watches whether your site or service actually hits its SLA. The data here powers the <a href="https://velprove.com/sla-credit-calculator">SLA Credit Calculator</a> on velprove.com.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <span>Data licensed CC-BY-4.0. Code MIT.</span>
+    <span>
+      <a href="https://velprove.com">velprove.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/velprove/sla-terms">GitHub</a>
+    </span>
+  </footer>
+
+  <script>
+    fetch("data/providers.json")
+      .then((r) => r.json())
+      .then((d) => {
+        document.getElementById("last-verified").textContent = d._meta.lastVerified;
+        document.getElementById("version").textContent = d._meta.version;
+        const grid = document.getElementById("providers");
+        for (const p of d.providers) {
+          const el = document.createElement("article");
+          el.className = "provider";
+          el.id = p.id;
+          let tiersHtml = "";
+          if (p.noSla) {
+            tiersHtml = `<div class="badge-no-sla">No SLA exists. $0 credit owed regardless of downtime.</div>`;
+          } else {
+            tiersHtml = `
+              <table class="tier-table">
+                <thead><tr><th>Uptime range</th><th>Credit owed</th></tr></thead>
+                <tbody>
+                  ${p.tiers.map((t, i) => {
+                    const next = i > 0 ? p.tiers[i - 1].uptimeMin : null;
+                    let range;
+                    if (t.creditPct === 0) range = `<span class="met">≥ ${t.uptimeMin.toFixed(2)}%</span>`;
+                    else if (t.uptimeMin === 0) range = `< ${next.toFixed(2)}%`;
+                    else range = `${t.uptimeMin.toFixed(2)}% – ${next.toFixed(2)}%`;
+                    return `<tr><td>${range}</td><td class="${t.creditPct > 0 ? "credit" : "met"}">${t.creditPct}%</td></tr>`;
+                  }).join("")}
+                </tbody>
+              </table>
+              <div class="cap-deadline">
+                <span>Credit cap: <strong>${p.creditCapPct}%</strong></span>
+                <span>Claim deadline: <strong>${p.claimDeadlineDays} days</strong></span>
+                <span>Default SLA: <strong>${p.defaultSla}%</strong></span>
+              </div>`;
+          }
+          el.innerHTML = `
+            <header>
+              <h3 class="provider-name">${p.name}</h3>
+              <p class="provider-scope">${p.scope}</p>
+            </header>
+            ${tiersHtml}
+            <div class="reality-check">${p.notes}</div>
+            <p class="source-link">Official SLA: <a href="${p.sourceUrl}" rel="noopener">${p.sourceUrl.replace(/^https?:\/\//, "")}</a></p>
+          `;
+          grid.appendChild(el);
+        }
+      })
+      .catch((e) => {
+        document.getElementById("providers").innerHTML = `<p style="color:var(--danger)">Failed to load dataset: ${e.message}</p>`;
+      });
+  </script>
+</body>
+</html>
